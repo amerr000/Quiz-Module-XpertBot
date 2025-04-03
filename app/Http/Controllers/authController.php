@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Student;
+use App\Models\User;
 
 class authController extends Controller
 {
@@ -12,12 +12,12 @@ class authController extends Controller
         $request->validate(
             [
                 'full_name'=>'required|string|max:255',
-                'email'=>'required|string|email|max:255|unique:students',
+                'email'=>'required|string|email|max:255|unique:Users,email',
                 'password'=>'required|string|min:6|confirmed',
             ]
 
             );
-            $student=Student::create(
+            $student=User::create(
                 [
                     'full_name'=>$request->full_name,
                     'email'=>$request->email,
@@ -41,7 +41,7 @@ class authController extends Controller
                 'password'=>'required|string',
             ]
         );
-        $student=Student::where('email',$request->email)->first();
+        $student=User::where('email',$request->email)->first();
         if(!$student || !password_verify($request->password,$student->password)){
             return response()->json([
                 'message'=>'Invalid credentials',

@@ -10,18 +10,20 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasApiTokens;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
-        'name',
+        'full_name',
         'email',
         'password',
     ];
+    public function answers(){
+        return $this->belongsToMany(Answer::class);
+    }
+    public function tracks(){
+        return $this->belongsToMany(Track::class);
+    }
+    //the $this here refers to the object that is calling the method
 
     /**
      * The attributes that should be hidden for serialization.
@@ -30,7 +32,6 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password',
-        'remember_token',
     ];
 
     /**

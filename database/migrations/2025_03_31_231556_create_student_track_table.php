@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('student_track', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('student_id')->constrained('students')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('track_id')->constrained('tracks')->onDelete('cascade');
             $table->string('status')->default('in_progress');
             $table->integer('score')->nullable(); 

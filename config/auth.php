@@ -42,9 +42,9 @@ return [
         ],
 
         
-        'student' => [ // i have added this to make it work ###############################################################################################
+        'user' => [ // i have added this to make it work ###############################################################################################
             'driver' => 'sanctum',
-            'provider' => 'students',
+            'provider' => 'users',
         ],
     ],
 
@@ -70,10 +70,7 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
-        'students' => [ // i have also added this to make it work###############################################################################################
-            'driver' => 'eloquent',
-            'model' => App\Models\Student::class,
-        ],
+       
     ],
 
     /*

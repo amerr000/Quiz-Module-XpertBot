@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\ExamQuestion;
-use App\Models\Student;
+use App\Models\User;
 
 
 class Answer extends Model
@@ -24,7 +24,7 @@ class Answer extends Model
     }
     public function students()
     {
-        return $this->belongsToMany(Student::class);
+        return $this->belongsToMany(User::class);
             
     }
 }
