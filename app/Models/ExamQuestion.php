@@ -13,12 +13,11 @@ class ExamQuestion extends Model
     protected $fillable = [
         'question',
         'grade',
-        'track_id'
     ];
 
-    public function track()
+    public function tracks()
     {
-        return $this->belongsTo(Track::class);
+        return $this->belongsToMany(Track::class)->withPivot('created_at','updated_at');
     }
     public function answers()
     {

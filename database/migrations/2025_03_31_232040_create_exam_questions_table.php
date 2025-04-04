@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('question');
             $table->float('grade');
-            $table->foreignId('track_id')->constrained('tracks')->onDelete('cascade');
             $table->timestamps();
         });
     }

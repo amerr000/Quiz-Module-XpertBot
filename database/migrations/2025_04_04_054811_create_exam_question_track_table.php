@@ -11,14 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('student_track', function (Blueprint $table) {
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+        Schema::create('exam_question_track', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('track_id')->constrained('tracks')->onDelete('cascade');
-            $table->string('status')->default('in_progress');
-            $table->integer('score')->default(0); 
+            $table->foreignId('exam_question_id')->constrained('exam_questions')->onDelete('cascade');
             $table->timestamps();
-            $table->primary(['user_id', 'track_id']);
-
         });
     }
 
@@ -27,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('student_track');
+        Schema::dropIfExists('exam_question_track');
     }
 };

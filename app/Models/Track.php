@@ -15,9 +15,9 @@ class Track extends Model
     ];
     public function users()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class, 'student_track')->withPivot('created_at', 'updated_at', 'status', 'score');
     }
     public function examQuestions(){
-        return $this->hasMany(ExamQuestion::class);
+        return $this->BelongsToMany(ExamQuestion::class);
     }
 }

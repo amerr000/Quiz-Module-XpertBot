@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Track;
+use App\Models\Answer;
 
 class User extends Authenticatable
 {
@@ -18,10 +20,10 @@ class User extends Authenticatable
         'password',
     ];
     public function answers(){
-        return $this->belongsToMany(Answer::class);
+        return $this->belongsToMany(Answer::class,'student_answer');
     }
     public function tracks(){
-        return $this->belongsToMany(Track::class);
+        return $this->belongsToMany(Track::class,'student_track')->withPivot('created_at', 'updated_at', 'status','score');;
     }
     //the $this here refers to the object that is calling the method
 
