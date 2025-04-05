@@ -41,13 +41,20 @@ class QuestionController extends Controller
         $request->validate([
             'track_id'=>'required|numeric|exists:tracks,id',
             'exam_question_id'=>'required|numeric|exists:exam_questions,id'
+
         ]);
 
         $track_id=$request->track_id;
         $exam_question_id=$request->exam_question_id;
 
         $examQuestion=ExamQuestion::findOrFail($exam_question_id);
-        $examQuestion->tracks()->attach($track_id);
+
+        $added=$examQuestion->tracks()->syncWithoutDetaching([$track_id]);
+        if (empty($added['attached'] && empty($added['detached']) && empty($added['updated']))) {
+            return response()->json([
+                'message' => 'This exam question is already assigned to the track.',
+            ], 200);
+        }
 
         return response()->json([
             'message'=>'Assignment completed successfully',
@@ -61,7 +68,8 @@ class QuestionController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $question=ExamQuestion::findOrFail($id);
+        return response()->json($question);
     }
 
     /**
@@ -69,7 +77,18 @@ class QuestionController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $question=ExamQuestion::findOrFail($id);
+        $validatedData=$request->validate([
+            'question' => 'sometimes|string|max:255|unique:exam_questions,question,' . $id,
+            'grade'=>'sometimes|numeric'
+            
+        ]);
+
+        $question->update($validatedData);
+        return response()->json([
+            "message"=>"The record has been updated successfuly",
+            "question"=>$question
+        ]);
     }
 
     /**
@@ -77,6 +96,8 @@ class QuestionController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $question = ExamQuestion::findOrFail($id);
+        $question->delete();
+        return response()->json(["message"=>"question deleted successfuly"],204);
     }
 }

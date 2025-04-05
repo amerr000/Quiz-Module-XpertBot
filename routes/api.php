@@ -6,6 +6,7 @@ use App\Http\Controllers\authController;
 use App\Http\Controllers\studentController;
 use App\Http\Controllers\TrackController;
 use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\AnswerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +41,7 @@ Route::middleware('auth:sanctum')->group(function (){
 
     Route::middleware('checkRole')->group(function(){
         //here we will define the routes that need to be admin to access
+        Route::apiResource('tracks',TrackController::class);
         Route::apiResource('students',StudentController::class);
 
         Route::get('registered-tracks', [studentController::class, 'getAllRegisteredTracks']);
@@ -57,6 +59,10 @@ Route::middleware('auth:sanctum')->group(function (){
 
         Route::apiResource('questions',QuestionController::class);
 
+
+        
+        Route::get('answers/{question_id}',[AnswerController::class,'index']);
+        Route::post('add-answer/{question_id}',[AnswerController::class,'store']);
     });
     
 
