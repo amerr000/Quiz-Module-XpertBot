@@ -49,7 +49,10 @@ class AnswerController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $answer=Answer::findOrFail($id);
+       return response()->json([
+            "answer"=>$answer
+        ],200);
     }
 
     /**
@@ -57,7 +60,17 @@ class AnswerController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $answer=Answer::findOrFail($id);
+        $validatedData=$request->validate([
+            'answer'=>'sometimes|string|max:255|unique:answers,answer,' . $id,
+            'exam_question_id'=>'sometimes|numeric|exists:exam_questions,id',
+            'is_correct'=>'sometimes|boolean'
+        ]);
+
+        $answer->update($validatedData);
+        return response()->json([
+            'message'=>"answer updated successfuly"
+        ],200);
     }
 
     /**
@@ -65,6 +78,17 @@ class AnswerController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $answer = Answer::findOrFail($id);
+        $answer->delete();
+        return response()->json([
+            "message"=>"answer deleted successfuly"
+        ],200);
+    }
+
+    public function getQuestionOfAnswer($id){
+        $answer=Answer::findOrFail($id);
+        $question=$answer->examQuestion;
+        return response()->json($question);
+
     }
 }

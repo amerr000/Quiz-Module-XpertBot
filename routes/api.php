@@ -63,6 +63,11 @@ Route::middleware('auth:sanctum')->group(function (){
         
         Route::get('answers/{question_id}',[AnswerController::class,'index']);
         Route::post('add-answer/{question_id}',[AnswerController::class,'store']);
+        Route::get('question-of-answer/{answer_id}',[AnswerController::class,'getQuestionOfAnswer']);
+        Route::delete('delete-answer/{answer_id}',[AnswerController::class,'destroy']);
+        Route::get('show-answer/{id}',[AnswerController::class,'show']);
+        Route::put('update-answer/{id}',[AnswerController::class,'update']);
+
     });
     
 
