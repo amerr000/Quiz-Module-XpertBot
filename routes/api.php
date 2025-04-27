@@ -48,7 +48,7 @@ Route::middleware('auth:sanctum')->group(function (){
 
 
 
-        Route::get("question-of-track/{id}",[QuestionController::class,'QuestionsOfTrack']);
+        Route::get("questions-of-track/{id}",[QuestionController::class,'QuestionsOfTrack']);
         Route::post('question',[QuestionController::class,'store']);//this will add a new question
         Route::post('assign-question',[QuestionController::class,'assignQuestionToTrack']);//this will add a new question
 
@@ -58,6 +58,7 @@ Route::middleware('auth:sanctum')->group(function (){
         Route::get('students-enrolled-in-track/{id}',[TrackController::class, 'getStudentsEnrolledInTrack']);
 
         Route::apiResource('questions',QuestionController::class);
+        Route::get('questions-and-answers-of-track/{id}',[QuestionController::class,'questionsAndAnswersOfTrack']);
 
 
         

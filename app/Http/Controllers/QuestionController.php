@@ -100,4 +100,30 @@ class QuestionController extends Controller
         $question->delete();
         return response()->json(["message"=>"question deleted successfuly"],204);
     }
+
+    public function questionsAndAnswersOfTrack(Request $request,$id){
+        $track=Track::findOrFail($id);
+        $questions=$track->examQuestions()->get();
+        if ($questions->isEmpty()) {
+            return response()->json(['message' => 'No questions found for this track.'], 404);
+        }
+        $output=[];
+        $output['track']=$track;
+        
+        $output['questions'] = [];
+
+        foreach($questions as $question){
+            
+            $output['questions'][] = [
+             
+                'question' => $question->question,
+                
+                'answers' => $question->answers
+            ];
+          
+        }     
+
+        return response()->json($output);
+
+    }
 }
