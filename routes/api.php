@@ -51,6 +51,7 @@ Route::middleware('auth:sanctum')->group(function (){
         Route::get("questions-of-track/{id}",[QuestionController::class,'QuestionsOfTrack']);
         Route::post('question',[QuestionController::class,'store']);//this will add a new question
         Route::post('assign-question',[QuestionController::class,'assignQuestionToTrack']);//this will add a new question
+        Route::get('answers-of-question/{id}',[QuestionController::class,'possibleAnswers']);
 
 
 

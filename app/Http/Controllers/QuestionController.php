@@ -100,7 +100,7 @@ class QuestionController extends Controller
         $question->delete();
         return response()->json(["message"=>"question deleted successfuly"],204);
     }
-
+#################################################################################I NEED TO ASK BOB ABOUT THIS ############################
     public function questionsAndAnswersOfTrack(Request $request,$id){
         $track=Track::findOrFail($id);
         $questions=$track->examQuestions()->get();
@@ -116,14 +116,28 @@ class QuestionController extends Controller
             
             $output['questions'][] = [
              
-                'question' => $question->question,
+                'question' => $question->question, ###############SPECIFICALLY HERE
                 
-                'answers' => $question->answers
+                'answers' => $question->answers##############AND HERE 
             ];
           
         }     
-
+############################# my questions is if i removed the question attribute in the $question the answers will be redundant appear to times in the output
         return response()->json($output);
+
+    }
+
+
+    public function possibleAnswers(Request $request, $id){
+        $question = ExamQuestion::findOrFail($id);
+
+        $answers=$question->answers;
+        if($answers->isEmpty()){
+            return response()->json([
+                "message"=>"There are no possible answers for this question yet!"
+            ]);
+        }
+        return response()->json($question);
 
     }
 }
